@@ -97,7 +97,7 @@ do
   --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
-  vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+  vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = false
 
@@ -337,8 +337,23 @@ do
   --
   -- We first install it from https://github.com/NMAC427/guess-indent.nvim
   -- and then call its `setup()` function to start it with default settings.
+  vim.pack.add {
+    { src = 'https://github.com/vieitesss/miniharp.nvim' },
+  }
+  local mh = require 'miniharp'
+  vim.keymap.set('n', '<leader>m', '<cmd>lua require("miniharp").toggle_file()<CR>', { desc = 'miniharp: toggle file' })
+  vim.keymap.set('n', '<leader>l', '<cmd>lua require("miniharp").show_list()<CR>', { desc = 'miniharp: show list' })
+  vim.keymap.set('n', '<leader>cm', '<cmd>lua require("miniharp").clear()<CR>', { desc = 'miniharp: clear marks' })
+  vim.keymap.set('n', '<C-n>', mh.next)
+  vim.keymap.set('n', '<C-p>', mh.prev)
+  vim.keymap.set('n', '<leader>1', function() mh.go_to(1) end, { desc = 'miniharp: go to mark 1' })
+  vim.keymap.set('n', '<leader>2', function() mh.go_to(2) end, { desc = 'miniharp: go to mark 2' })
+  vim.keymap.set('n', '<leader>3', function() mh.go_to(3) end, { desc = 'miniharp: go to mark 3' })
+  vim.keymap.set('n', '<leader>4', function() mh.go_to(4) end, { desc = 'miniharp: go to mark 4' })
+  vim.keymap.set('n', '<leader>4', function() mh.go_to(4) end, { desc = 'miniharp: go to mark 4' })
+
   vim.pack.add { gh 'akinsho/git-conflict.nvim' }
-  require('git-conflict').setup()
+  require('git-conflict').setup {}
 
   vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
   require('guess-indent').setup {}
@@ -778,7 +793,7 @@ do
       local enabled_filetypes = {
         lua = true,
         javascript = true,
-        ruby = true
+        ruby = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -792,7 +807,7 @@ do
     -- You can also specify external formatters in here.
     formatters_by_ft = {
       ruby = { 'rubocop' },
-      javascript = { "prettier" }
+      javascript = { 'prettier' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },

@@ -517,6 +517,9 @@ do
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+  -- Git search
+  vim.keymap.set('n', '<leader>gs', builtin.git_files, { desc = '[S]earch Git files' })
+
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
   vim.api.nvim_create_autocmd('LspAttach', {
@@ -778,6 +781,7 @@ do
       local enabled_filetypes = {
         -- lua = true,
         -- python = true,
+        ruby = true
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -790,6 +794,7 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      ruby = { 'rubocop' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },

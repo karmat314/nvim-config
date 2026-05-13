@@ -712,6 +712,16 @@ do
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
+    ruby_lsp = {
+      cmd = { 'bundle', 'exec', 'ruby-lsp' },
+      filetypes = { 'ruby', 'eruby' },
+      root_dir = function(bufnr, on_dir)
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        local found = vim.fs.find({ 'Gemfile', '.git' }, { upward = true, path = vim.fs.dirname(bufname) })[1]
+        if found then on_dir(vim.fs.dirname(found)) end
+      end,
+    },
+
     ts_ls = {},
 
     stylua = {}, -- Used to format Lua code

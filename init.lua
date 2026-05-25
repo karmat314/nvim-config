@@ -110,7 +110,7 @@ do
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -723,6 +723,46 @@ do
     },
 
     ts_ls = {},
+
+    tailwindcss = {
+      filetypes = {
+        'html',
+        'css',
+        'scss',
+        'javascript',
+        'typescript',
+        'javascriptreact',
+        'typescriptreact',
+        'vue',
+        'svelte',
+        'astro',
+        'php',
+        'erb',
+        'eruby', -- Add eruby since you have Ruby LSP
+        'blade',
+        'edge',
+        'ejs',
+        'haml',
+        'pug',
+        'njk',
+        'mdx',
+      },
+      settings = {
+        tailwindCSS = {
+          -- Optional: Add custom class attributes if you use custom naming
+          classAttributes = { 'class', 'className', 'ngClass', ':class' },
+          -- Optional: Enable intellisense for your specific Tailwind config location
+          configPath = 'tailwind.config.js',
+          -- Optional: Validate your CSS files
+          validate = true,
+          -- Optional: Include other filetypes to scan for class names
+          includeLanguages = {
+            eruby = 'html', -- Map ERB files to HTML for Tailwind scanning
+            ruby = 'html',
+          },
+        },
+      },
+    },
 
     stylua = {}, -- Used to format Lua code
 

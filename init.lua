@@ -350,7 +350,6 @@ do
   vim.keymap.set('n', '<leader>2', function() mh.go_to(2) end, { desc = 'miniharp: go to mark 2' })
   vim.keymap.set('n', '<leader>3', function() mh.go_to(3) end, { desc = 'miniharp: go to mark 3' })
   vim.keymap.set('n', '<leader>4', function() mh.go_to(4) end, { desc = 'miniharp: go to mark 4' })
-  vim.keymap.set('n', '<leader>4', function() mh.go_to(4) end, { desc = 'miniharp: go to mark 4' })
 
   vim.pack.add { gh 'akinsho/git-conflict.nvim' }
   require('git-conflict').setup {}
@@ -541,8 +540,9 @@ do
     callback = function(event)
       local buf = event.buf
 
+      vim.keymap.set('n', '<leader>gf', vim.lsp.buf.references, { desc = 'LSP References' })
       -- Find references for the word under your cursor.
-      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+      vim.keymap.set('n', '<leader>grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
 
       -- Jump to the implementation of the word under your cursor.
       -- Useful when your language has ways of declaring types without an actual implementation.
@@ -551,7 +551,7 @@ do
       -- Jump to the definition of the word under your cursor.
       -- This is where a variable was first declared, or where a function is defined, etc.
       -- To jump back, press <C-t>.
-      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+      vim.keymap.set('n', '<leader>grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
 
       -- Fuzzy find all the symbols in your current document.
       -- Symbols are things like variables, functions, types, etc.
@@ -858,7 +858,6 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      ruby = { 'rubocop' },
       javascript = { 'prettier' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
@@ -881,6 +880,9 @@ do
 
   -- NOTE: You can also specify plugin using a version range for its git tag.
   --  See `:help vim.version.range()` for more info
+
+  vim.pack.add { { src = gh 'windwp/nvim-ts-autotag' } }
+
   vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
   require('luasnip').setup {}
 

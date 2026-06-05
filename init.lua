@@ -829,6 +829,27 @@ do
     vim.lsp.config(name, server)
     vim.lsp.enable(name)
   end
+
+  vim.opt.signcolumn = 'yes' -- Always show sign column for diagnostics
+
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'ruby',
+    callback = function()
+      vim.lsp.start {
+        name = 'rubocop',
+        cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+        root_dir = vim.fs.root(0, { 'Gemfile', '.git' }) or vim.fn.getcwd(),
+      }
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    pattern = '*.rb',
+    callback = function()
+      -- Use the first available formatter (ruby-lsp or rubocop)
+      vim.lsp.buf.format { async = false }
+    end,
+  })
 end
 
 -- ============================================================
@@ -859,6 +880,7 @@ do
     -- You can also specify external formatters in here.
     formatters_by_ft = {
       javascript = { 'prettier' },
+      ruby = { 'rubocop' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
